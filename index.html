@@ -10,6 +10,12 @@
     <style>
         #map {
             height: 500px;
+            width: 100%;
+        }
+        .popup-image {
+            max-width: 250px;
+            height: auto;
+            object-fit: fill;
         }
     </style>
 </head>
@@ -21,11 +27,37 @@
         integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
         crossorigin=""></script>
     <script>
-        const map = L.map('map').setView([8.360, 124.868], 17);
+        const map = L.map('map').setView([8.35955, 124.868], 16);
 
         L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 19,
             attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         }).addTo(map);
+
+        // render pins from campus-map.json
+        fetch('./campus-map.json')
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Failed to load campus map data');
+                }
+                return response.json();
+            })
+            .then(data => {
+                data.forEach(pin => {
+                    const latitude = pin.lat ?? pin.latitude;
+                    const longitude = pin.lng ?? pin.long ?? pin.longitude;
+
+                    if (latitude == null || longitude == null) return;
+
+                    const marker = L.marker([latitude, longitude]).addTo(map);
+                    const image = `<img src="${pin.img}" class="popup-image" alt="${pin.name}">`;
+                    marker.bindPopup(`
+                        ${pin.title}<br>
+                        ${pin.name}<br>
+                        ${image}
+                    `);
+                });
+            })
     </script>
 </body>
 </html>
