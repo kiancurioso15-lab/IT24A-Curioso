@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Complete your Storia Cafe order details and payment selection.">
+  <title>Checkout — Storia Cafe</title><link rel="stylesheet" href="css/styles.css">
+  <script defer src="js/data.js"></script><script defer src="js/ui.js"></script><script defer src="js/cart.js"></script><script defer src="js/menu.js"></script><script defer src="js/orders.js"></script>
+</head>
+<body><div data-site-header></div><main>
+  <section class="page-hero"><div class="shell"><span class="eyebrow">Nearly time to enjoy</span><h1>Checkout.</h1><p>Tell us where to send your order and how you’d like to pay.</p></div></section>
+  <section class="section" style="padding-top:8px"><div class="shell">
+    <ol class="progress" aria-label="Order progress"><li data-step="1"><a href="menu.html">Menu</a></li><li data-step="2"><a href="cart.html">Cart</a></li><li class="is-active" data-step="3">Checkout</li><li data-step="4">Confirmation</li><li data-step="5">Details</li></ol>
+    <div class="checkout-layout"><form class="content-card" id="checkout-form">
+      <div id="checkout-error" class="form-error" hidden role="alert"></div>
+      <div class="field-grid">
+        <div class="field"><label for="customer-name">Name</label><input id="customer-name" name="name" autocomplete="name" required minlength="2" maxlength="80"></div>
+        <div class="field"><label for="customer-phone">Phone</label><input id="customer-phone" name="phone" type="tel" autocomplete="tel" required minlength="7" maxlength="20" title="Enter a valid phone number."></div>
+        <fieldset class="field full" style="border:0;padding:0;margin:0"><legend class="group-label">How would you like your order?</legend><div class="choice-grid"><label class="choice"><input type="radio" name="service" value="Dine-in" required checked> Dine-in</label><label class="choice"><input type="radio" name="service" value="Takeout" required> Takeout</label><label class="choice"><input type="radio" name="service" value="Delivery" required> Delivery</label></div></fieldset>
+        <div class="field full" id="address-field" hidden><label for="customer-address">Delivery address</label><textarea id="customer-address" name="address" autocomplete="street-address"></textarea></div>
+        <fieldset class="field full" style="border:0;padding:0;margin:0"><legend class="group-label">Payment method</legend><div class="choice-grid"><label class="choice"><input type="radio" name="payment" value="Cash" required checked> Cash</label><label class="choice"><input type="radio" name="payment" value="GCash" required> GCash</label><label class="choice"><input type="radio" name="payment" value="Card" required> Card</label></div></fieldset>
+      </div>
+      <div class="hero-actions"><a class="button secondary" href="cart.html">← Back to cart</a><button class="button" type="submit">Place order</button></div>
+    </form>
+    <aside class="content-card summary-card"><h2>Your order</h2><div id="checkout-items"></div><div class="summary-row total"><span>Total</span><strong id="checkout-total">₱0</strong></div><p style="color:var(--muted);font-size:12px">Payment is collected at the cafe or on delivery. This demo does not process payments.</p></aside>
+    </div>
+  </div></section>
+</main><div data-site-footer></div></body></html>

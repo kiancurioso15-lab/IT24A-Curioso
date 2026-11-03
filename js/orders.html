@@ -1,0 +1,15 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="View and track your current and past Storia Cafe orders.">
+  <title>My Orders — Storia Cafe</title><link rel="stylesheet" href="css/styles.css">
+  <script defer src="js/data.js"></script><script defer src="js/ui.js"></script><script defer src="js/cart.js"></script><script defer src="js/menu.js"></script><script defer src="js/orders.js"></script>
+</head>
+<body><div data-site-header></div><main>
+  <section class="page-hero"><div class="shell"><span class="eyebrow">Every good thing, remembered</span><h1>My orders.</h1><p>Choose an order card to see what’s inside, check its progress, or order it again.</p></div></section>
+  <section class="section" style="padding-top:8px"><div class="shell">
+    <div class="toolbar"><label class="field">Status<select id="order-status-filter" class="search-field"><option>All</option><option>Pending</option><option>Preparing</option><option>Ready</option><option>Completed</option><option>Cancelled</option></select></label><label class="field">Sort<select id="order-sort" class="search-field"><option value="newest">Newest first</option><option value="oldest">Oldest first</option></select></label></div>
+    <div id="orders-list" aria-live="polite"></div>
+  </div></section>
+</main><div data-site-footer></div></body></html>
