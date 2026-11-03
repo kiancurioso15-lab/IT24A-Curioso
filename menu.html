@@ -1,0 +1,18 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Explore coffee, non-coffee drinks, pastries, and meals at Storia Cafe.">
+  <title>Our Menu — Storia Cafe</title><link rel="stylesheet" href="css/styles.css">
+  <script defer src="js/data.js"></script><script defer src="js/ui.js"></script><script defer src="js/cart.js"></script><script defer src="js/menu.js"></script><script defer src="js/orders.js"></script>
+</head>
+<body><div data-site-header></div><main>
+  <section class="page-hero"><div class="shell"><span class="eyebrow">Made fresh, made with care</span><h1>Something for every story.</h1><p>Find your new favorite, from first coffee to last bite. Choose a product for its details, sizes, and add-ons.</p></div></section>
+  <section class="section" style="padding-top:10px"><div class="shell">
+    <ol class="progress" aria-label="Order progress"><li class="is-active" data-step="1">Menu</li><li data-step="2">Cart</li><li data-step="3">Checkout</li><li data-step="4">Confirmation</li><li data-step="5">Details</li></ol>
+    <div class="toolbar"><input class="search-field" id="menu-search" type="search" placeholder="Search coffee, pastry, meals…" aria-label="Search menu"><div class="filter-tabs" id="filter-tabs" role="group" aria-label="Filter menu categories"></div></div>
+    <div class="product-grid" id="product-grid" aria-live="polite"></div>
+    <div class="hero-actions"><a class="button secondary" href="order.html">← Start an order</a><a class="button" href="cart.html">Next: Cart →</a></div>
+  </div></section>
+  <div class="modal-backdrop" id="product-modal" aria-hidden="true"></div>
+</main><div data-site-footer></div></body></html>

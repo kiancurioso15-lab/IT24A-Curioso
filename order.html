@@ -1,0 +1,17 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Start a Storia Cafe order for dine-in, takeout, or delivery.">
+  <title>Start an Order — Storia Cafe</title><link rel="stylesheet" href="css/styles.css">
+  <script defer src="js/data.js"></script><script defer src="js/ui.js"></script><script defer src="js/cart.js"></script><script defer src="js/menu.js"></script><script defer src="js/orders.js"></script>
+</head>
+<body><div data-site-header></div><main>
+  <section class="page-hero"><div class="shell"><span class="eyebrow">Your table, your way</span><h1>Let’s get your order started.</h1><p>Pick something delicious below. You can review your cart before you choose how to enjoy it.</p></div></section>
+  <section class="section" style="padding-top:10px"><div class="shell">
+    <ol class="progress" aria-label="Order progress"><li class="is-active" data-step="1">Menu</li><li data-step="2">Cart</li><li data-step="3">Checkout</li><li data-step="4">Confirmation</li><li data-step="5">Details</li></ol>
+    <div class="toolbar"><input class="search-field" id="menu-search" type="search" placeholder="Search the menu…" aria-label="Search menu"><div class="filter-tabs" id="filter-tabs" role="group" aria-label="Filter menu categories"></div></div>
+    <div class="product-grid" id="product-grid" aria-live="polite"></div>
+    <div class="hero-actions"><a class="button secondary" href="menu.html">View full menu</a><a class="button" href="cart.html">Next: Review cart →</a></div>
+  </div></section><div class="modal-backdrop" id="product-modal" aria-hidden="true"></div>
+</main><div data-site-footer></div></body></html>
