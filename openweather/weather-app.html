@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather App</title>
+</head>
+<body>
+    <h1>Weather App</h1>
+    <button onclick="getWeather()">Get Weather</button>
+    <div id="weatherResult"></div>
+
+    <script>
+        const apiKey = "36d08210ad62ad65a5a307f502fcfee4";
+
+        async function getWeather() {
+            const city = prompt("Enter a city name:");
+            if (!city || !city.trim()) {
+                alert("No city entered");
+                return;
+            }
+
+            const params = new URLSearchParams({
+                q: city.trim(),
+                appid: apiKey,
+                units: "metric"
+            });
+
+            const weatherResult = document.getElementById("weatherResult");
+
+            try {
+                const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?${params.toString()}`);
+                if (!response.ok) {
+                    throw new Error(response.status === 404 ? "City not found" : `Weather request failed (${response.status})`);
+                }
+
+                const data = await response.json();
+                weatherResult.innerHTML = `
+                    <h2>${data.name}</h2>
+                    <p>Temperature: ${data.main.temp}°C</p>
+                    <p>Weather: ${data.weather[0].description}</p>
+                    <p>Humidity: ${data.main.humidity}%</p>
+                    <p>Wind Speed: ${data.wind.speed} m/s</p>
+                `;
+            } catch (error) {
+                weatherResult.innerHTML = `<p>Error: ${error.message}</p>`;
+                alert(`Error: ${error.message}`);
+            }
+        }
+    </script>
+</body>
+</html>
