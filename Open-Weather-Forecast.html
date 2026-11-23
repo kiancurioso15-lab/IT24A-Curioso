@@ -24,11 +24,9 @@
 
 </body>
 <script>
+const apiKey = "6b1bc3060b2811c66eafedeb029ce310";
 
-    const apiKey = "6b1bc3060b2811c66eafedeb029ce310";
-
-    async function getWeather() {
-
+async function getWeather() {
     const city = prompt("Enter a city name");
 
     if (!city) {
@@ -36,11 +34,9 @@
         return;
     }
 
-    const url =
-        `https://api.openweathermap.org/data/2.5/weather?q=${encodeURIComponent(city)}&appid=${apiKey}&units=metric`;
+    const url = `https://api.openweathermap.org/data/2.5/weather?q=${encodeURIComponent(city)}&appid=${apiKey}&units=metric`;
 
     try {
-
         const response = await fetch(url);
 
         if (!response.ok) {
@@ -48,62 +44,36 @@
         }
 
         const data = await response.json();
-
-        getWeatherByCoordinates(
-            data.coord.lat,
-            data.coord.lon
-        );
-
+        await getWeatherByCoordinates(data.coord.lat, data.coord.lon);
     } catch (error) {
-
         alert("Error: " + error.message);
-
     }
 }
 
 function getGPSLocation() {
-
     if (!navigator.geolocation) {
         alert("Geolocation is not supported by your browser.");
         return;
     }
 
-    document.getElementById("locationResult").innerHTML =
-        "Getting your location...";
+    document.getElementById("locationResult").innerHTML = "Getting your location...";
 
     navigator.geolocation.getCurrentPosition(
-
-        function(position) {
-
-            const latitude = position.coords.latitude;
-            const longitude = position.coords.longitude;
-
-            getWeatherByCoordinates(latitude, longitude);
-
+        function (position) {
+            getWeatherByCoordinates(position.coords.latitude, position.coords.longitude);
         },
-
-        function(error) {
-
+        function (error) {
             document.getElementById("locationResult").innerHTML = "";
-
             alert("GPS Error: " + error.message);
-
         }
-
     );
 }
 
 async function getWeatherByCoordinates(latitude, longitude) {
-
-    const weatherUrl =
-        `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${apiKey}&units=metric`;
-
-    const forecastUrl =
-        `https://api.openweathermap.org/data/2.5/forecast?lat=${latitude}&lon=${longitude}&appid=${apiKey}&units=metric`;
+    const weatherUrl = `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${apiKey}&units=metric`;
+    const forecastUrl = `https://api.openweathermap.org/data/2.5/forecast?lat=${latitude}&lon=${longitude}&appid=${apiKey}&units=metric`;
 
     try {
-
-        // Current Weather
         const weatherResponse = await fetch(weatherUrl);
 
         if (!weatherResponse.ok) {
@@ -116,24 +86,15 @@ async function getWeatherByCoordinates(latitude, longitude) {
             `Location: ${data.name}, ${data.sys.country}`;
 
         document.getElementById("weatherResult").innerHTML = `
-
             <h2>Current Weather</h2>
-
             <h3>${data.name}, ${data.sys.country}</h3>
-
-            <img src="https://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png">
-
+            <img src="https://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png" alt="${data.weather[0].description}">
             <p>Temperature: ${data.main.temp} °C</p>
-
             <p>Weather: ${data.weather[0].description}</p>
-
             <p>Humidity: ${data.main.humidity}%</p>
-
             <p>Wind Speed: ${data.wind.speed} m/s</p>
-
         `;
 
-        // 5-Day Forecast
         const forecastResponse = await fetch(forecastUrl);
 
         if (!forecastResponse.ok) {
@@ -142,44 +103,25 @@ async function getWeatherByCoordinates(latitude, longitude) {
 
         const forecastData = await forecastResponse.json();
 
-        const forecastResult =
-            document.getElementById("forecastResult");
+        const forecastHtml = forecastData.list
+            .slice(0, 5)
+            .map(item => `
+                <div class="forecast-item">
+                    <p>${new Date(item.dt * 1000).toLocaleString()}</p>
+                    <img src="https://openweathermap.org/img/wn/${item.weather[0].icon}.png" alt="${item.weather[0].description}">
+                    <p>${item.main.temp} °C</p>
+                    <p>${item.weather[0].description}</p>
+                </div>
+            `)
+            .join("");
 
-        forecastResult.innerHTML = `
-            <h2>5-Day Weather Forecast</h2>
+        document.getElementById("forecastResult").innerHTML = `
+            <h2>Forecast</h2>
+            ${forecastHtml}
         `;
-
-        // Display forecast every 24 hours
-        forecastData.list
-            .filter(item => item.dt_txt.includes("12:00:00"))
-            .forEach(item => {
-
-                forecastResult.innerHTML += `
-
-                    <hr>
-
-                    <h3>${item.dt_txt}</h3>
-
-                    <img src="https://openweathermap.org/img/wn/${item.weather[0].icon}@2x.png">
-
-                    <p>Temperature: ${item.main.temp} °C</p>
-
-                    <p>Weather: ${item.weather[0].description}</p>
-
-                    <p>Humidity: ${item.main.humidity}%</p>
-
-                    <p>Wind Speed: ${item.wind.speed} m/s</p>
-
-                `;
-
-            });
-
     } catch (error) {
-
         alert("Error: " + error.message);
-
     }
-
 }
 </script>
 </html>
