@@ -133,10 +133,53 @@ async function getWeatherByCoordinates(latitude, longitude) {
 
         `;
 
-    } catch (error) {
-        alert("Error: " + error.message);
-    }
-}
+        // 5-Day Forecast
+        const forecastResponse = await fetch(forecastUrl);
 
+        if (!forecastResponse.ok) {
+            throw new Error("Unable to retrieve forecast");
+        }
+
+        const forecastData = await forecastResponse.json();
+
+        const forecastResult =
+            document.getElementById("forecastResult");
+
+        forecastResult.innerHTML = `
+            <h2>5-Day Weather Forecast</h2>
+        `;
+
+        // Display forecast every 24 hours
+        forecastData.list
+            .filter(item => item.dt_txt.includes("12:00:00"))
+            .forEach(item => {
+
+                forecastResult.innerHTML += `
+
+                    <hr>
+
+                    <h3>${item.dt_txt}</h3>
+
+                    <img src="https://openweathermap.org/img/wn/${item.weather[0].icon}@2x.png">
+
+                    <p>Temperature: ${item.main.temp} °C</p>
+
+                    <p>Weather: ${item.weather[0].description}</p>
+
+                    <p>Humidity: ${item.main.humidity}%</p>
+
+                    <p>Wind Speed: ${item.wind.speed} m/s</p>
+
+                `;
+
+            });
+
+    } catch (error) {
+
+        alert("Error: " + error.message);
+
+    }
+
+}
 </script>
 </html>
