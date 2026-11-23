@@ -93,5 +93,50 @@ function getGPSLocation() {
     );
 }
 
+async function getWeatherByCoordinates(latitude, longitude) {
+
+    const weatherUrl =
+        `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${apiKey}&units=metric`;
+
+    const forecastUrl =
+        `https://api.openweathermap.org/data/2.5/forecast?lat=${latitude}&lon=${longitude}&appid=${apiKey}&units=metric`;
+
+    try {
+
+        // Current Weather
+        const weatherResponse = await fetch(weatherUrl);
+
+        if (!weatherResponse.ok) {
+            throw new Error("Unable to retrieve weather");
+        }
+
+        const data = await weatherResponse.json();
+
+        document.getElementById("locationResult").innerHTML =
+            `Location: ${data.name}, ${data.sys.country}`;
+
+        document.getElementById("weatherResult").innerHTML = `
+
+            <h2>Current Weather</h2>
+
+            <h3>${data.name}, ${data.sys.country}</h3>
+
+            <img src="https://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png">
+
+            <p>Temperature: ${data.main.temp} °C</p>
+
+            <p>Weather: ${data.weather[0].description}</p>
+
+            <p>Humidity: ${data.main.humidity}%</p>
+
+            <p>Wind Speed: ${data.wind.speed} m/s</p>
+
+        `;
+
+    } catch (error) {
+        alert("Error: " + error.message);
+    }
+}
+
 </script>
 </html>
