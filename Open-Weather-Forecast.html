@@ -1,4 +1,4 @@
-    <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -23,4 +23,44 @@
     <div id="forecastResult"></div>
 
 </body>
+<script>
+
+    const apiKey = "6b1bc3060b2811c66eafedeb029ce310";
+
+    async function getWeather() {
+
+    const city = prompt("Enter a city name");
+
+    if (!city) {
+        alert("No city entered");
+        return;
+    }
+
+    const url =
+        `https://api.openweathermap.org/data/2.5/weather?q=${encodeURIComponent(city)}&appid=${apiKey}&units=metric`;
+
+    try {
+
+        const response = await fetch(url);
+
+        if (!response.ok) {
+            throw new Error("City not found");
+        }
+
+        const data = await response.json();
+
+        getWeatherByCoordinates(
+            data.coord.lat,
+            data.coord.lon
+        );
+
+    } catch (error) {
+
+        alert("Error: " + error.message);
+
+    }
+}
+
+
+</script>
 </html>
